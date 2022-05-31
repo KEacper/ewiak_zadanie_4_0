@@ -4,6 +4,7 @@ import java.io.IOException;
 
 class WrongStudentName extends Exception { }
 class WrongAge extends Exception { }
+class WrongDate extends Exception { }
 
 class Main {
     public static Scanner scan = new Scanner(System.in);
@@ -24,6 +25,8 @@ class Main {
                 System.out.println("Błędne imie studenta!");
             } catch(WrongAge e) {
                 System.out.println("Błędny wiek studenta!");
+            } catch(WrongDate e) {
+                System.out.println("Błędny format daty urodzenia!");
             }
         }
     }
@@ -54,25 +57,34 @@ class Main {
 
         return age;
     }
-
-    public static void exercise1() throws IOException, WrongStudentName, WrongAge {
-        var name = ReadName();
-        var age = ReadAge();
+  public static String ReadDate() throws WrongDate {
         scan.nextLine();
         System.out.println("Podaj datę urodzenia DD-MM-YYYY");
-        var date = scan.nextLine();
-        (new Service1()).addStudent(new Student(name, age, date));
+        String date = scan.nextLine();
+        if(date.charAt(2) != '-' || date.charAt(5) != '-')
+            throw new WrongDate();
+
+        return date;
     }
 
-  // public static void exercise1() throws IOException, WrongStudentName {
-  //       var name = ReadName();
-  //       System.out.println("Podaj wiek: ");
-  //       var age = scan.nextInt();
-  //       scan.nextLine();
-  //       System.out.println("Podaj datę urodzenia DD-MM-YYY");
-  //       var date = scan.nextLine();
-  //       (new Service1()).addStudent(new Student(name, age, date));
-  //   }
+    public static void exercise1() throws IOException, WrongStudentName, WrongAge, WrongDate {
+        var name = ReadName();
+        var age = ReadAge();
+      
+        var date = ReadDate();
+        
+        (new Service1()).addStudent(new Student(name, age, date));
+    }
+   // public static void exercise1() throws IOException, WrongStudentName, WrongAge {
+   //      var name = ReadName();
+   //      var age = ReadAge();
+   //      scan.nextLine();
+   //      System.out.println("Podaj datę urodzenia DD-MM-YYYY");
+   //      var date = scan.nextLine();
+   //      (new Service1()).addStudent(new Student(name, age, date));
+   //  }
+
+
 
     public static void exercise2() throws IOException {
         var students = (new Service1()).getStudents();
