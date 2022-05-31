@@ -23,9 +23,8 @@ class Main {
             } catch(WrongStudentName e) {
                 System.out.println("Błędne imie studenta!");
             } catch(WrongAge e) {
-                System.out.println("Zły wiek!");
+                System.out.println("Błędny wiek studenta!");
             }
-          
         }
     }
 
@@ -38,7 +37,7 @@ class Main {
         return scan.nextInt();
     }
 
-    public static String ReadName() throws WrongStudentName, WrongAge {
+    public static String ReadName() throws WrongStudentName {
         scan.nextLine();
         System.out.println("Podaj imie: ");
         String name = scan.nextLine();
@@ -47,19 +46,33 @@ class Main {
 
         return name;
     }
+      public static int ReadAge() throws WrongAge {
+        System.out.println("Podaj wiek: ");
+        int age = scan.nextInt();
+        if(age < 0 || age > 100)
+            throw new WrongAge();
+
+        return age;
+    }
 
     public static void exercise1() throws IOException, WrongStudentName, WrongAge {
         var name = ReadName();
-        System.out.println("Podaj wiek: ");
-        var age = scan.nextInt();
+        var age = ReadAge();
         scan.nextLine();
-      if(age>100 || age<0)
-            throw new WrongAge();
         System.out.println("Podaj datę urodzenia DD-MM-YYYY");
         var date = scan.nextLine();
-      if()
         (new Service1()).addStudent(new Student(name, age, date));
     }
+
+  // public static void exercise1() throws IOException, WrongStudentName {
+  //       var name = ReadName();
+  //       System.out.println("Podaj wiek: ");
+  //       var age = scan.nextInt();
+  //       scan.nextLine();
+  //       System.out.println("Podaj datę urodzenia DD-MM-YYY");
+  //       var date = scan.nextLine();
+  //       (new Service1()).addStudent(new Student(name, age, date));
+  //   }
 
     public static void exercise2() throws IOException {
         var students = (new Service1()).getStudents();
@@ -67,6 +80,7 @@ class Main {
             System.out.println(current.ToString());
         }
     }
+  
 
     public static void exercise3() throws IOException {
         scan.nextLine();
